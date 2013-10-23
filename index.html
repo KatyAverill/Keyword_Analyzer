@@ -1,17 +1,58 @@
 <!doctype html>
 <html>
 <head>
+	<script language="JavaScript" type="text/javascript" src="jquery-1.9.1.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+	<link href="DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css">
 	<link href="stylesheets/styles.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Keyword Density Analyzer</h1>
-	<h2>Analyze the keyword density of any article</h2>
-<textarea rows="20" cols="70">
+	<script>
+            $( document ).ready( function() {
 
-  Paste your article here!
-</textarea>
-<br>
-  <input type="submit" value="Submit">
+                $('form').submit(function(event){
+                        event.preventDefault();
+                        var
+                                keyword_list = $('#keywords').val().split(" "),
+                                word_list = $('#searchtext').val().split(" "),
+                                nwords = word_list.length;
+                                $('#result').html(nwords);
+                        keyword_dict = {};
+                        for (var i = 0, w; w = keyword_list[i]; i++) {
+                                var w = w.replace(/\W/g,'');
+                                keyword_dict[w] = 0;
+                        }
+                        for (var i = 0, w; w = word_list[i]; i++) {
+                                var w = w.replace(/\W/g,'');
+                                for(var keyword in keyword_dict){
+                                        if (keyword == w){
+                                                keyword_dict[w] += 1;
+                                        }
+                                }
+                        }
+                        items = '<thead><th>keyword</th><th>occurance</th><th>percent of text</th></thead>';
+                        for (keyword in keyword_dict){
+                                var occ = keyword_dict[keyword]*100/nwords;
+                                var c=''
+                                items += '<tr class="'+c+'"><td>'+keyword+'</td><td>'+keyword_dict[keyword]+'</td><td>'+occ.toPrecision(2)+'</td></tr>';
+                            }
+                        console.log(keyword_dict);
+                        $('#result').append('<table>'+items+'<table>');
+                        $('#result table').dataTable();
+                });
+         });
+    </script>
 
-</body>
+                <h1>Keyword Density Analyzer</h1>
+                <form>
+                        <label>Keywords </label>
+                        <input type="text" id="keywords"><br>
+                        <label>Text</label>
+                        <textarea rows="4" cols="50" id="searchtext"></textarea><br>
+                        <button class="btn btn-success" id="go" value="Submit"></button>
+                </form>
+                <dev id="result">
+                        
+                </dev>
+        </body>
 </html>
