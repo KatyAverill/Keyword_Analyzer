@@ -13,10 +13,10 @@
                 $('form').submit(function(event){
                         event.preventDefault();
                         var
-                                keyword_list = $('#searchtext').val().split(" "),
+                                keyword_list = $('#keywords').val().split(" "),
                                 word_list = $('#searchtext').val().split(" "),
                                 nwords = word_list.length;
-                                $('#result').html(nwords + " Total Words in Article");
+                                $('#result').html(nwords);
                         keyword_dict = {};
                         for (var i = 0, w; w = keyword_list[i]; i++) {
                                 var w = w.replace(/\W/g,'');
@@ -30,63 +30,7 @@
                                         }
                                 }
                         }
-
-/*  Here is a JavaScript Array of all the unwanted words...
-
-                        var unwanted = [
-                                "a",
-                                "all",
-                                "am",
-                                "an",
-                                "and",
-                                "any",
-                                "are",
-                                "as",
-                                "at",
-                                "be",
-                                "but",
-                                "can",
-                                "did",
-                                "do",
-                                "does",
-                                "for",
-                                "from",
-                                "had",
-                                "has",
-                                "have",
-                                "here",
-                                "how",
-                                "i",
-                                "if",
-                                "in",
-                                "is",
-                                "it",
-                                "no",
-                                "not",
-                                "of",
-                                "on",
-                                "or",
-                                "so",
-                                "that",
-                                "the",
-                                "then",
-                                "there",
-                                "this",
-                                "to",
-                                "too",
-                                "up",
-                                "use",
-                                "what",
-                                "when",
-                                "where",
-                                "who",
-                                "why",
-                                "you"
-                          ];
-
-*/
-
-                        items = '<thead><th>unique keywords</th><th>occurance</th><th>percent of text</th></thead>';
+                        items = '<thead><th>keyword</th><th>occurance</th><th>percent of text</th></thead>';
                         for (keyword in keyword_dict){
                                 var occ = keyword_dict[keyword]*100/nwords;
                                 var c=''
@@ -101,12 +45,14 @@
 
                 <h1>Keyword Density Analyzer</h1>
                 <form>
-                        <label>Article:</label><br>
-                        <textarea rows="25" cols="100" id="searchtext"></textarea><br>
-                        <input class="btn btn-success" id="go" type="submit" value="Submit"></input>
+                        <label>Keywords </label>
+                        <input type="text" id="keywords"><br>
+                        <label>Text</label>
+                        <textarea rows="4" cols="50" id="searchtext"></textarea><br>
+                        <button class="btn btn-success" id="go" value="Submit"></button>
                 </form>
-                <div id="result">
+                <dev id="result">
                         
-                </div>
+                </dev>
         </body>
 </html>
